@@ -1,0 +1,16 @@
+.DS_Store
+nbproject
+_magento
+.idea
+var/*
+.svn/
+blog_/
+media/catalog/product/cache/
+datasync/
+media/wysiwyg/.thumbs/
+media/import/
+feeds/
+blog
+blog/
+app/etc/local.xml
+.htaccess
