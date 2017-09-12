@@ -1,0 +1,123 @@
+<!-- navigation BOF -->
+<?php
+	$megaeffect     = Mage::getStoreConfig('base/menu/effect');
+	$_menu          = $this->renderCategoriesMenuHtml(FALSE, 0, 'level-top', 'sub-wrapper shown-sub' );
+	$routeName      = Mage::app()->getRequest()->getRouteName();
+	$identifier     = Mage::getSingleton('cms/page')->getIdentifier();
+	$rand_id        = rand();
+	$catalogSearchHelper =  $this->helper('catalogsearch');
+?>
+<div class="arw-mobile-menu">
+    <div class="arw-mobile-menu-header">
+        <form id="search_mini_form_<?php echo $rand_id;?>" class="search_mini_form" action="<?php echo $catalogSearchHelper->getResultUrl() ?>" method="get">
+        	<button type="submit" class="button"><span class="fa fa-search"></span></button>
+            <input id="search_<?php echo $rand_id;?>" type="text" name="<?php echo $catalogSearchHelper->getQueryParamName() ?>" value="<?php echo $catalogSearchHelper->getEscapedQueryText() ?>" class="input-text" maxlength="<?php echo $catalogSearchHelper->getMaxQueryLength();?>" placeholder="Search..." />
+            <br clear="all" />
+		</form>
+		<?php /*?><span class="arw-mobile-menu-title">
+            <i class="fa fa-bars"></i><span><?php echo $this->__('Menu');?></span>
+			</span>
+		<span class="arw-close-canvas"><i class="fa fa-close"></i></span><?php */?>
+		
+	</div>
+    <div class="sidebar-menu">
+        <div class="sidebar-menu-heading">
+        	<?php echo $this->__('Shop Bellfield')?>
+		</div>
+        <ul id="arw_accordionmenu_<?php echo $rand_id;?>" class="nav-accordion nav-mobile-accordion">
+            <?php /*?><li><a href="<?php echo $this->getBaseUrl(); ?>"><span><?php echo $this->__('Home'); ?></span></a></li><?php */?>
+            <?php echo $this->renderCategoriesMenuHtml(TRUE, 0, 'level-top'); ?>
+            <?php
+				if(Mage::getStoreConfig('megamenu/menu/enable_custom')){
+					$urlkey                 = Mage::getStoreConfig('megamenu/menu/url_key');
+					$arrayUrlKey            = explode(";", $urlkey);
+					foreach($arrayUrlKey as $url){
+						$condition          = explode(':', $url);
+						$page               = Mage::getModel('cms/page')->load($condition[0], 'identifier');
+						$class = '';
+						if(isset($condition[1])) $class = 'menu-item-'.$condition[1];
+						if($page->getIsActive()) {
+						?>
+                        <li class="level0 level-top cms-static-page <?php if($routeName == 'cms' && $identifier == $page->getIdentifier()) {echo " active";}?> <?php echo $class;?>">
+                            <a href="<?php echo Mage::helper('cms/page')->getPageUrl($condition[0]);?>" class="level-top">
+                                <span><?php echo $page->getTitle();?></span>
+							</a>
+						</li>
+						<?php
+						}
+					}
+				}
+			?>
+		</ul>
+		
+        <script type="text/javascript">
+            jQuery(document).ready(function() {
+                jQuery("#arw_accordionmenu_<?php echo $rand_id;?>").arwAccordionMenu({
+                    accordion:true,
+                    speed: 400,
+                    closedSign: 'collapse',
+                    openedSign: 'expand',
+                    mouseType: 0,
+                    easing: 'easeInOutQuad'
+				});
+			});
+		</script>
+        <div class="sidebar-menu-heading bottom">
+        	<?php echo $this->__('My Bellfield')?>
+		</div>
+		
+		
+		<ul class="my-account-items">
+            <li><a title="My Account" href="<?php echo Mage::helper('customer')->getAccountUrl()?>">My Account</a></li>
+            <li><a title="Blog" href="<?php echo $this->getUrl('blog')?>">Blog</a></li>
+            <li><a title="Wishlist" href="<?php echo $this->getUrl('wishlist')?>">Wishlist</a></li>
+            <li><a title="Checkout" href="<?php echo $this->getUrl('onestepcheckout')?>">Checkout</a></li>
+		</ul>
+		<div class="header-store">
+			<div class="dropdown show">
+				<?php if(Mage::app()->getStore()->getStoreId() == 1){ ?>
+					<a class="btn btn-secondary dropdown-toggle" href="https://www.bellfieldclothing.com/" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<span>£</span>
+						<img width="30" alt="stage-one-left" src="<?php echo $this->getUrl(); ?>media/wysiwyg/uk-flag-new.jpg" />
+					</a>
+					<?php }elseif(Mage::app()->getStore()->getStoreId() == 2){ ?>
+					<a class="btn btn-secondary dropdown-toggle" href="https://www.bellfieldclothing.com/" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<span>€</span>
+						<img width="30" alt="stage-one-left" src="<?php echo $this->getUrl(); ?>media/wysiwyg/eur-flag.jpg" />
+					</a>
+					<?php }elseif(Mage::app()->getStore()->getStoreId() == 3){?>
+					<a class="btn btn-secondary dropdown-toggle" href="https://www.bellfieldclothing.com/" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<span>$</span>
+						<img width="30" alt="stage-one-left" src="<?php echo $this->getUrl(); ?>media/wysiwyg/usd-flag-new.jpg" />
+					</a>
+				<?php } ?>
+				<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+					<?php if(Mage::app()->getStore()->getStoreId() != 3){ ?>
+						
+						<a class="dropdown-item" href="https://usd.bellfieldclothing.com/">
+							<img width="30" alt="stage-one-left" src="<?php echo $this->getUrl(); ?>media/wysiwyg/usd-flag-new.jpg" />
+							<span>$</span>
+						</a>
+						<br />
+					<?php } ?>
+					<?php if(Mage::app()->getStore()->getStoreId() != 1){ ?>
+						<a class="dropdown-item" href="https://www.bellfieldclothing.com/">
+							<img width="30" alt="stage-one-left" src="<?php echo $this->getUrl(); ?>media/wysiwyg/uk-flag-new.jpg" />
+							<span>£</span>
+						</a>
+						<br />
+					<?php } ?>
+					
+					<?php if(Mage::app()->getStore()->getStoreId() != 2){ ?>
+						<a class="dropdown-item" href="https://eur.bellfieldclothing.com/">
+							<img width="30" alt="stage-one-left" src="<?php echo $this->getUrl(); ?>media/wysiwyg/eur-flag.jpg" />
+							<span>€</span>
+						</a>
+					<?php } ?>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="site-overlay"></div>

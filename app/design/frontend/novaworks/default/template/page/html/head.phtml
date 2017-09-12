@@ -1,0 +1,127 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2014 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php /*?><meta name="viewport" content="width=device-width, initial-scale=1"><?php */?>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+
+<meta http-equiv="Content-Type" content="<?php echo $this->getContentType() ?>" />
+<title><?php echo $this->getTitle() ?></title>
+<meta name="description" content="<?php echo htmlspecialchars($this->getDescription()) ?>" />
+<meta name="keywords" content="<?php echo htmlspecialchars($this->getKeywords()) ?>" />
+<meta name="robots" content="<?php echo htmlspecialchars($this->getRobots()) ?>" />
+<link rel="icon" href="<?php echo $this->getFaviconFile(); ?>" type="image/x-icon" />
+<link rel="shortcut icon" href="<?php echo $this->getFaviconFile(); ?>" type="image/x-icon" />
+<!--[if lt IE 7]>
+<script type="text/javascript">
+//<![CDATA[
+    var BLANK_URL = '<?php echo $this->helper('core/js')->getJsUrl('blank.html') ?>';
+    var BLANK_IMG = '<?php echo $this->helper('core/js')->getJsUrl('spacer.gif') ?>';
+//]]>
+</script>
+<![endif]-->
+<?php echo $this->getCssJsHtml() ?>
+<?php echo $this->getChildHtml() ?>
+<?php echo $this->helper('core/js')->getTranslatorScript() ?>
+<?php echo $this->getIncludes() ?>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<?php if(Mage::helper('sebian')->getCfgLayout('responsive/responsive') == '1'):?>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+<?php endif;?>
+    <script type="text/javascript">var grid_equal_height = <?php echo (Mage::getStoreConfig('sebian/category_grid/equal_height')) ? 'true' : 'false'?>;</script>
+<!-- TrustBox script -->
+<script type="text/javascript" src="//widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js" async></script>
+<!-- End Trustbox script -->
+
+
+	<!--Start of Zendesk Chat Script-->
+<script type="text/javascript">
+window.$zopim||(function(d,s){var z=$zopim=function(c){z._.push(c)},$=z.s=
+d.createElement(s),e=d.getElementsByTagName(s)[0];z.set=function(o){z.set.
+_.push(o)};z._=[];z.set._=[];$.async=!0;$.setAttribute("charset","utf-8");
+$.src="https://v2.zopim.com/?4SJIQIioCwBmURjoyVmi9JjzmGx4WbLz";z.t=+new Date;$.
+type="text/javascript";e.parentNode.insertBefore($,e)})(document,"script");
+</script>
+<!--End of Zendesk Chat Script-->
+
+<script>
+(function(d){
+var e=d.createElement('script');
+e.src='https://td.yieldify.com/yieldify/code.js?w_uuid=90c37497-602d-45e8-aa87-6ec275308fa0&k=1&loca=' + window.location.href;
+e.async=true;
+d.getElementsByTagName('head')[0].appendChild(e);}
+(document));
+</script>	
+<script type="text/javascript">(function(){function f(){var e=document.createElement("script");e.type="text/javascript";e.async=true;e.src="//platform2.cloud-iq.com/cartrecovery/store.js?app_id=9017";var t = document.getElementsByTagName('head')[0];t.appendChild(e);}f();})();</script>
+<?php 
+/*  Font family */
+$configs =  Mage::helper('sebian')->getCfgSectionDesign(Mage::registry('cssgen_store'));
+$primary_font_family_group = $configs['font']['primary_font_family_group'];
+$primary_font_family_custom = $configs['font']['primary_font_family_custom'];
+$primary_font_family = $configs['font']['primary_font_family'];
+$primary_google_font_charsets = $configs['font']['primary_google_font_charsets'];
+$primary_google_font_variants = $configs['font']['primary_google_font_variants'];
+if($primary_google_font_variants == 'all'){
+    $primary_google_font_variants = '100italic,100,200italic,200,300italic,300,400,400italic,500italic,500,600,600italic,700,700italic,800italic,800,900,900italic';
+}
+$heading_font_family_group = $configs['font']['heading_font_family_group'];
+$heading_font_family_custom = $configs['font']['heading_font_family_custom'];
+$heading_font_family = $configs['font']['heading_font_family'];
+$heading_google_font_charsets = $configs['font']['heading_google_font_charsets'];
+$heading_google_font_variants = $configs['font']['heading_google_font_variants'];
+if($heading_google_font_variants == 'all'){
+    $heading_google_font_variants = '100italic,100,200italic,200,300italic,300,400,400italic,500italic,500,600,600italic,700,700italic,800italic,800,900,900italic';
+}
+$highlight_font_family_group = $configs['font']['highlight_font_family_group'];
+$highlight_font_family_custom = $configs['font']['highlight_font_family_custom'];
+$highlight_font_family = $configs['font']['highlight_font_family'];
+$highlight_google_font_charsets = $configs['font']['highlight_google_font_charsets'];
+$highlight_google_font_variants = $configs['font']['highlight_google_font_variants'];
+if($highlight_google_font_variants == 'all'){
+    $highlight_google_font_variants = '100italic,100,200italic,200,300italic,300,400,400italic,500italic,500,600,600italic,700,700italic,800italic,800,900,900italic';
+}
+
+if($primary_font_family_group == 'google')
+{
+    $body_fonts_tmp = preg_replace('/\s/','+',$primary_font_family);
+    $body_fonts_tmp .= ($primary_google_font_variants != '') ? ':'.$primary_google_font_variants : '';
+    $font_charsets = '&amp;subset='.$primary_google_font_charsets;
+    echo "<link href='//fonts.googleapis.com/css?family={$body_fonts_tmp}{$font_charsets}' rel='stylesheet' type='text/css'/>";
+}
+if($heading_font_family_group == 'google')
+{
+    $heading_fonts_tmp = preg_replace('/\s/','+',$heading_font_family);
+    $heading_fonts_tmp .= ($heading_google_font_variants != '') ? ':'.$heading_google_font_variants : '';
+    $font_charsets = '&subset='.$heading_google_font_charsets;
+    echo "<link href='//fonts.googleapis.com/css?family={$heading_fonts_tmp}{$heading_fonts_tmp}' rel='stylesheet' type='text/css'/>";
+}
+if($highlight_font_family_group == 'google')
+{
+    $highlight_fonts_tmp = preg_replace('/\s/','+',$highlight_font_family);
+    $highlight_fonts_tmp .= ($highlight_google_font_variants != '') ? ':'.$highlight_google_font_variants : '';
+    $font_charsets = '&subset='.$highlight_google_font_charsets;
+    echo "<link href='//fonts.googleapis.com/css?family={$highlight_fonts_tmp}{$highlight_fonts_tmp}' rel='stylesheet' type='text/css'/>";
+}
+?>

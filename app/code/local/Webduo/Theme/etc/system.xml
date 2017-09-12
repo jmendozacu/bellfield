@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+<config>
+	<tabs>
+		<webduo translate="label" module="theme">
+			<label>Website Settings</label>
+			<sort_order>2</sort_order>
+		</webduo>
+	</tabs>
+	<sections>
+        <theme>
+			<label>Theme Settings</label>
+            <tab>webduo</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>50</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+				<product_page translate="label" module="theme">
+                    <label>Product Page - Delivery Returns</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>2</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                    	<delivery_returns translate="label">
+                            <label>Delivery Returns</label>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+						</delivery_returns>
+					</fields>
+				</product_page>
+				<general translate="label" module="theme">
+                    <label>Product Size Guide Settings</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>1</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                    	<!--<men_size_guide translate="label">
+                            <label>Mens Size Guide</label>
+                            <frontend_type>image</frontend_type>
+                            <backend_model>adminhtml/system_config_backend_image</backend_model>
+                            <upload_dir config="system/filesystem/media" scope_info="1">theme</upload_dir>
+                            <base_url type="media" scope_info="1">theme</base_url>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+						</men_size_guide>
+						<women_size_guide translate="label">
+                            <label>Womens Size Guide</label>
+                            <frontend_type>image</frontend_type>
+                            <backend_model>adminhtml/system_config_backend_image</backend_model>
+                            <upload_dir config="system/filesystem/media" scope_info="1">theme</upload_dir>
+                            <base_url type="media" scope_info="1">theme</base_url>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+						</women_size_guide>-->
+						<men_size_guide translate="label">
+                            <label>Mens Size Guide</label>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+						</men_size_guide>
+						<women_size_guide translate="label">
+                            <label>Womens Size Guide</label>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+						</women_size_guide>
+						<men_root_cat_id translate="label">
+                            <label>Men Category ID</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+						</men_root_cat_id>
+						<women_root_cat_id translate="label">
+                            <label>Women Category ID</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>4</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+						</women_root_cat_id>
+					</fields>
+				</general>
+            </groups>
+        </theme>
+    </sections>
+</config>

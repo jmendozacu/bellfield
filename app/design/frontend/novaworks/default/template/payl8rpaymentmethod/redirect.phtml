@@ -1,0 +1,31 @@
+<?php
+//  var_dump($this->data);
+?>
+<!--<h2><?php echo $this->__('Demo Payment Gateway') ?></h2>
+<p>It's a demo page acting as a payment gateway interface! So don't worry you won't get charged :-)</p>
+<form name="payl8rpaymentmethod" method="post" action="<?php echo Mage::helper('payl8rpaymentmethod')->getPaymentGatewayUrl(); ?>">
+  <input type="hidden" name="orderId" value="<?php // echo $orderId;  ?>">
+  <input type="submit" value="<?php echo $this->__('Make Payment') ?>" />
+</form>-->
+
+<form id="payl8rForm" target="payl8rFrame" action="<?php echo $this->action; ?>" method="post">
+  <input type="hidden" name="data" value="<?php echo $this->data; ?>"/>
+  <input type="hidden" name="rid" value="<?php echo $this->rid; ?>">  
+  <input type="submit" style="display:none">
+</form>
+<iframe width="100%" height="100%" src="" name="payl8rFrame" style="min-height:600px; border: none;margin:0"></iframe>
+<script type="text/javascript">
+  (function () {
+    window.addEventListener("message", pl_iframe_heightUpdate, false);
+     var prevHeight = jQuery('[name="payl8rFrame"]').height();
+    function pl_iframe_heightUpdate(event) {
+      var origin = event.origin || event.originalEvent.origin;
+      if (origin !== "https://payl8r.com")
+        return;
+      if (prevHeight !== jQuery('[name="payl8rFrame"]').height())
+        prevHeight = event.data;
+        jQuery('[name="payl8rFrame"]').height(event.data);
+    }
+    document.getElementById("payl8rForm").submit();
+  })();
+</script>

@@ -1,0 +1,12 @@
+<ul class="mob-categories">	
+			<?php $category = Mage::getModel('catalog/category')->load(4);
+				$subcategories = $category->getChildrenCategories();
+				if (count($subcategories) > 0){
+					foreach($subcategories as $subcategory){ ?>
+					<li class="categ-name col-sm-6 col-xs-6">
+						<a href="<?php  echo $subcategory->getUrl();?>"><?php  echo $subcategory->getName();?></a>
+					</li>
+					
+					<?php    }
+				} ?>
+		</ul>

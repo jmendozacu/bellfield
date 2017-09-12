@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+
+<config>
+    <tabs>
+        <itsax translate="label" module="bellfield">
+            <label>Bellfield</label>
+            <sort_order>10</sort_order>
+        </itsax>
+    </tabs>
+    <sections>
+
+
+       <bellfieldimport module="bellfield">
+            <tab>itsax</tab>
+            <label>Import</label>
+            <frontend_type>text</frontend_type>
+            <sort_order>20</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <general>
+                    <label>Options for bellfield import</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <media_import translate="label">
+                            <label>Source Import Directory</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+
+                        </media_import>
+                        <media_import_images translate="label">
+                            <label>Source Images Directory</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+
+                        </media_import_images>
+                        <admin_email translate="label">
+                            <label>Admin Email Address</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+
+                        </admin_email>
+                        <server_email>
+                        	<label>Server Email Address</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+
+                        </server_email>
+
+                    </fields>
+                  </general>
+            </groups>
+        </bellfieldimport>
+
+    </sections>
+
+</config>

@@ -1,0 +1,53 @@
+<?php if ($this->getTotals()): ?>
+    <dt class="complete normal-padding">
+        <a href="<?php echo $this->getUrl('checkout/cart') ?>">Edit Items</a>
+    </dt>
+    <dd class="complete">
+        <div id="cartBox">
+            <?php $_helper = $this->helper('catalog/output');
+            $quote = Mage::helper('checkout')->getQuote();
+            foreach ($quote->getItemsCollection() as $item) {
+                if ($item->getPrice()==0) continue;
+                $_product = Mage::getModel('catalog/product')->load($item->getProductId());
+                ?>
+                <div class="sideProduct clearfix">
+                    <img src="<?php echo Mage::helper('catalog/image')->init($_product, 'thumbnail')->resize(75, 75); ?>" alt="<?php echo $this->htmlEscape($item->getName()); ?>" width="75" />
+                    <div class="right">
+                        <h5><?php echo $item->getName(); ?></h5>
+                        <p>Qty: <?php echo $item->getQty(); ?></p>
+                        <?php
+                        $floatQty = floatval($item->getQty());
+                        $total = $floatQty * $item->getPrice();
+                        ?>
+                        <p>Price: <?php echo $this->helper('checkout')->formatPrice($_product->getFinalPrice(), 2); ?></p>
+                    </div>
+                </div>
+            <?php  } ?>
+        </div>
+        <?php $getCouponCode = Mage::getSingleton('checkout/cart')->getQuote()->getCouponCode(); ?>
+        <form id="discount-coupon-form" action="/checkout/onepage/coupon/" method="post" onsubmit="updateCoupon();event.preventDefault();">
+            <p id="coupon_errors" class="error"></p>
+            <input id="coupon_code" name="coupon_code" type="text" value="<?php echo $getCouponCode; ?>" placeholder="Enter your promo code..."/>
+            <?php  if(strlen($getCouponCode)) { ?>
+                <button type="button" id="removeCouponButton" onclick="updateCoupon(2);" value="<?php echo $this->__('Remove')?>"><span><?php echo $this->__('Remove') ?></span></button>
+            <?php } else { ?>
+            <button type="button" onclick="updateCoupon(1);" value="<?php echo $this->__('Apply Promo Code')?>"><span><?php echo $this->__('Apply Promo Code') ?></span></button>
+            <?php } ?>
+        </form>
+        <table class="data-table ">
+        <?php $_colspan = $this->helper('tax')->displayCartBothPrices() ? 5 : 3; ?>
+        <?php echo $this->renderTotals(null, $_colspan); ?>
+        <?php echo $this->renderTotals('footer', $_colspan); ?>
+        <?php if ($this->needDisplayBaseGrandtotal()):?>
+        <tr>
+            <td class="a-right" colspan="<?php echo $_colspan; ?>">
+                <small><?php echo $this->helper('sales')->__('Your credit card will be charged for') ?></small>
+            </td>
+            <td class="a-right">
+                <small><?php echo $this->displayBaseGrandtotal() ?></small>
+            </td>
+        </tr>
+        <?php endif?>
+        </table>
+    </dd>
+<?php endif; ?>

@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /
+Disallow: /cgi-bin/
+Disallow: /tmp/
+Disallow: /junk/
+Disallow: /var/
+Disallow: /lib/

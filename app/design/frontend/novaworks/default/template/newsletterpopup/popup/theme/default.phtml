@@ -1,0 +1,36 @@
+<?php $helper = Mage::helper('newsletterpopup');?>
+<div id="esns_box_layer" class="esns_theme_default">
+    <div id="esns_box_close"></div>
+    <div id="esns_box_title">
+        <?php if ($this->getFirstTitle()): ?>
+        <div id="esns_box_block_1">
+           <?php echo $this->getFirstTitle() ?>
+        </div>
+        <?php endif; ?>
+        <?php if ($this->getSecondTitle()): ?>
+        <div id="esns_box_block_2">
+            <?php echo $this->getSecondTitle() ?>
+        </div>
+        <?php endif; ?>
+    </div>
+
+    <?php if ($this->getText()): ?>
+    <div class="esns_box_lines"></div>
+    <div id="esns_box_block_3">
+        <?php echo $this->getText() ?>
+    </div>
+    <?php endif; ?>
+    <div class="esns_box_lines"></div>
+    <div id="esns_box_subscribe">
+        <div id="esns_box_subscribe_response_error"></div>
+        <div id="esns_box_subscribe_response_success"></div>
+        <div id="esns_box_subscribe_response_coupon">
+            <div id="esns_box_coupon_code"><?php echo $helper->translate('coupon');?> <span></span></div>
+            <div class="esns-box-shop-now-button"><a class="esns-close" href="javascript:void(0)" style="background-color: black"><?php echo $helper->translate('shop_now'); ?></a> </div>
+        </div>
+        <div id="esns_box_subscribe_form">
+            <div id="esns_box_subscribe_input"><input onclick="if(this.value=='<?php echo $helper->translate('email'); ?>') this.value=''" onblur="if(this.value=='') this.value='<?php echo $helper->translate('email'); ?>'" id="esns_email" name="subscribe_email" value="<?php echo $helper->translate('email'); ?>" type="text"></div>
+            <div id="esns_box_subscribe_submit"><a href="javascript:void(0)" id="esns_submit" ><?php echo $helper->translate('subscribe'); ?></a></div>
+        </div>
+    </div>
+</div>

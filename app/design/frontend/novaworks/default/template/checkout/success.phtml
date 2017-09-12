@@ -1,0 +1,170 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2006-2014 X.commerce, Inc. (http://www.magento.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<div class="page-title">
+    <h1><?php echo $this->__('Your order has been received.') ?></h1>
+</div>
+<div class="block-message-cart hidden-xs hidden-sm">
+    <div class="row">
+        <div class="col-xs-12 col-sm-4">
+            <div class="arw-services-box text-center">
+                <div class="service-thumb thumb-style-2">
+                    <i class="service-icon fa fa-shopping-cart"></i>
+                </div>
+                <div class="title-divider-style-5"></div>
+                <h4 class="service-title font-size-1x text-uppercase">Shopping cart</h4>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-4">
+            <div class="arw-services-box text-center">
+                <div class="service-thumb thumb-style-2">
+                    <i class="service-icon fa fa-align-left"></i>
+                </div>
+                <div class="title-divider-style-5"></div>
+                <h4 class="service-title font-size-1x text-uppercase">Check out detail</h4>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-4">
+            <div class="arw-services-box text-center active">
+                <div class="service-thumb thumb-style-2">
+                    <i class="service-icon fa fa-check"></i>
+                </div>
+                <div class="title-divider-style-5"></div>
+                <h4 class="service-title font-size-1x text-uppercase">Oder complete</h4>
+            </div>
+        </div>
+    </div>
+</div>
+<?php echo $this->getMessagesBlock()->toHtml() ?>
+<div class="text-center">
+<h2 class="sub-title text-uppercase"><?php echo $this->__('Thank you for your purchase!') ?></h2>
+
+<?php if ($this->getOrderId()):?>
+<?php if ($this->getCanViewOrder()) :?>
+    <p><?php echo $this->__('Your order # is: %s.', sprintf('<a href="%s">%s</a>', $this->escapeHtml($this->getViewOrderUrl()), $this->escapeHtml($this->getOrderId()))) ?></p>
+<?php  else :?>
+    <p><?php echo $this->__('Your order # is: %s.', $this->escapeHtml($this->getOrderId())) ?></p>
+<?php endif;?>
+    <p><?php echo $this->__('You will receive an order confirmation email with details of your order and a link to track its progress.') ?></p>
+<?php if ($this->getCanViewOrder() && $this->getCanPrintOrder()) :?>
+    <p>
+        <?php echo $this->__('Click <a href="%s" onclick="this.target=\'_blank\'">here to print</a> a copy of your order confirmation.', $this->getPrintUrl()) ?>
+        <?php echo $this->getChildHtml() ?>
+    </p>
+<?php endif;?>
+<?php endif;?>
+
+<?php if ($this->getAgreementRefId()): ?>
+    <p><?php echo $this->__('Your billing agreement # is: %s.', sprintf('<a href="%s">%s</a>', $this->escapeHtml($this->getAgreementUrl()), $this->escapeHtml($this->getAgreementRefId())))?></p>
+<?php endif;?>
+
+<?php if ($profiles = $this->getRecurringProfiles()):?>
+<p><?php echo $this->__('Your recurring payment profiles:'); ?></p>
+<ul class="disc">
+<?php foreach($profiles as $profile):?>
+<?php $profileIdHtml = ($this->getCanViewProfiles() ? sprintf('<a href="%s">%s</a>', $this->escapeHtml($this->getProfileUrl($profile)), $this->escapeHtml($this->getObjectData($profile, 'reference_id'))) : $this->escapeHtml($this->getObjectData($profile, 'reference_id')));?>
+    <li><?php echo $this->__('Payment profile # %s: "%s".', $profileIdHtml, $this->escapeHtml($this->getObjectData($profile, 'schedule_description')))?></li>
+<?php endforeach;?>
+</ul>
+<?php endif;?>
+
+<div class="buttons-set">
+    <button type="button" class="button" title="<?php echo $this->__('Continue Shopping') ?>" onclick="window.location='<?php echo $this->getUrl() ?>'"><span><span><?php echo $this->__('Continue Shopping') ?></span></span></button>
+</div>
+</div>
+
+<?php 
+//-------------------------------------------
+// START AWIN CONVERSION VALUE TRACKING CODE
+//-------------------------------------------
+$lastOrderId = Mage::getSingleton('checkout/session')->getLastOrderId(); 
+ 
+$order = Mage::getModel('sales/order')->load($lastOrderId);
+$_products = $order->getAllItems();
+ 
+$_totalData = $order->getData();
+$_grand = $_totalData['grand_total']; 
+$_sub = $_totalData['subtotal']; 
+$_ship = $_totalData['shipping_amount']; 
+$_discount = $_totalData['discount_amount'];
+$_voucher = $_totalData['coupon_code'];
+$_total = $_sub + $_discount;
+?>
+ 
+<img src="https://www.awin1.com/sread.img?tt=ns&amp;tv=2&amp;merchant=5688&amp;amount=<?php echo $_total; ?>&amp;ref=<?php echo $this->getOrderId(); ?>&amp;parts=DEFAULT:<?php echo $_total; ?>&amp;vc=<?php echo $_voucher; ?>&amp;ch=aw&amp;testmode=0&amp;cr=GBP" />
+ 
+<form style="display:none;" name="aw_basket_form">
+ <textarea wrap="physical" id="aw_basket">
+<?php 
+$productLines = array();
+foreach($_products as $product => $p) {
+    if ($p['order_id'] == $lastOrderId) {
+        if (is_null($p['parent_item_id'])) {
+            $productLines[$p['item_id']] = 'AW:P|5688|' . $this->getOrderId() . '|' . $p->getProductId() . '|' . $p->getName() . '|' . $p->getPrice() . '|' . round($p->getQtyOrdered(), 0) . '|' . $p->getSku() . '|DEFAULT|CATEGORY' . "\r\n";
+        }
+    }
+}
+foreach ($productLines as $productLine) {
+    echo $productLine;
+}
+?>
+</textarea>
+ </form>
+ 
+<script type="text/javascript">
+        //<![CDATA[
+        /*** Do not change ***/
+        var AWIN = {};
+        AWIN.Tracking = {};
+        AWIN.Tracking.Sale = {};
+ 
+        /*** Set your transaction parameters ***/
+        AWIN.Tracking.Sale.amount = '<?php echo $_total; ?>';
+        AWIN.Tracking.Sale.currency = 'GBP';
+        AWIN.Tracking.Sale.channel = 'aw';
+        AWIN.Tracking.Sale.orderRef = '<?php echo $this->getOrderId(); ?>';
+        AWIN.Tracking.Sale.parts = 'DEFAULT:<?php echo $_total; ?>';
+        AWIN.Tracking.Sale.voucher = '<?php echo $_voucher; ?>';
+        AWIN.Tracking.Sale.test = '0';
+        //]]>
+</script>
+
+
+<img src="//drs2.veinteractive.com/DataReceiverService.asmx/Pixel?journeycode=84E26619-3887-4784-B609-74FB47032486" width="1" height="1"/>
+
+<!-- Conversion Pixel - Bellfield Clothing - Conversion Page - Secure IMG - DO NOT MODIFY -->
+<img src="https://secure.adnxs.com/px?id=813010&seg=7832409&t=2" width="1" height="1" />
+<!-- End of Conversion Pixel -->
+
+<!-- Trustpilot conversion script -->
+<script type="text/javascript">
+(function(c,o,n,v,e,r,t){c['TPConversionObject']=e;c[e]=c[e]||function(){c[e].buid='58933c980000ff00059bf392',(c[e].q=c[e].q||[]).push(arguments)};r=o.createElement(n),t=o.getElementsByTagName(n)[0];r.async=1;r.src=v;t.parentNode.insertBefore(r,t)})(window,document,'script','https://widget.trustpilot.com/conversion/conversion.js','tpConversion');
+
+tpConversion('amount', '<?php echo $_total; ?>'); // total cost of the order, eg. '13.00'
+tpConversion('currency', 'GBP'); // your shop's currency, e.g. USD
+tpConversion('basket_size', '<?php echo count($_products); ?>'); // total number of items purchased
+</script>
+<!-- End Trustpilot conversion script -->

@@ -1,0 +1,324 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2014 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+/**
+ * @var Mage_Page_Block_Html_Header $this
+ */
+$show_icon_search   = Mage::helper('sebian')->getCfg('header/show_icon_search');
+$show_search_by_cat = Mage::helper('sebian')->getCfg('header/show_search_by_category');
+$show_language      = Mage::helper('sebian')->getCfg('header/show_language');
+$show_currency      = Mage::helper('sebian')->getCfg('header/show_currency');
+$mini_ajaxcart_icon = Mage::helper('sebian')->getCfg('header/mini_ajaxcart_icon');
+$stick_nav          = Mage::helper('sebian')->getCfg('header/sticky_nav');
+$mobile_menu_style  = Mage::helper('sebian')->getCfg('header/mobile_menu_style');
+$header_style       = Mage::helper('sebian')->getCfg('header/style');
+
+
+$topLinks = $this->getChildHtml('topLinks');
+$store_language = $this->getChildHtml('store_language');
+ $store_currency = $this->getChildHtml('store_currency');
+
+$class_header = array('header-container');
+$class_header[] = 'header_' . $header_style;
+if($stick_nav){
+    $class_header[] = 'header_fixed_menu';
+}
+?>
+<a class="btn-menu hidden-lg hidden-md" style="z-index: 9999; cursor: pointer; display: none;"><span class="fa fa-bars"></span></a>
+<header class="<?php echo implode(' ',$class_header)?>">
+
+	<div class="header-top-section col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding-left no-padding-right">
+		<div class="header-container" style="margin: 0px 50px;">
+			<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('header-top-lines')->toHtml();?>
+		</div>
+		<div class="clearfix"></div> 
+	</div> 
+	
+    <div class="header-top hidden-lg hidden-md hidden-sm hidden-xs">
+        <div class="container">
+            <div class="row">
+                <div class="header-top-left hidden-xs col-sm-5 col-md-5 col-lg-5">
+                    <?php echo $this->getChildHtml('header_welcome');?>
+
+                </div>
+                <div class="header-top-right col-xs-12 col-sm-7 col-md-7 col-lg-7">
+                    <div class="header-top-right-inner">
+                        <div class="header-top-link">
+                            <ul class="header-top-link-ul">
+                              <?php /*  <li>
+                                    <span><?php echo $this->__('My Account')?></span>
+                                    <?php echo $topLinks;?>
+                                </li> */ ?>
+                                <li class="header-language">
+                                     <?php //echo $this->getChildHtml('store_switcher') ?>
+                                </li>
+                                <?php /* if($store_currency):?>
+                                    <?php echo $store_currency;?>
+                                <?php endif; */?>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="header">
+        <div class="header-fullwidth container">
+            <div class="header-wrapper">
+                <div class="header-logo">
+                    <?php
+                        $logo_src = $this->getLogoSrc();
+                        $logo_tmp = explode('/',$logo_src);
+                        $logo_tmp2 =  $logo_tmp[count($logo_tmp) - 1];
+                        $logo_tmp2 = explode('.',$logo_tmp2);
+                        $logo_tmp3 =  $logo_tmp[count($logo_tmp) - 1];
+                        $logo_tmp3 = explode('.',$logo_tmp3);
+                        if(isset($logo_tmp2[1])){
+                            $logo_tmp[count($logo_tmp) - 1] = $logo_tmp2[0] . '-alt.' .$logo_tmp2[1];
+                        }
+                        $logo_tmp2 = implode('/',$logo_tmp);
+
+                        if(isset($logo_tmp3[1])){
+                            $logo_tmp[count($logo_tmp) - 1] = $logo_tmp3[0] . '-white.' .$logo_tmp3[1];
+                        }
+                        $logo_tmp3 = implode('/',$logo_tmp);
+                    ?>
+                    <div class="hidden-xs">
+                    	<?php if ($this->getIsHomePage()):?>
+                    	    <?php $homepage_logo = $this->getSkinUrl().'images/homepage-logo.png';?>
+                            <h1 class="logo"><strong class="no-display"><?php echo $this->getLogoAlt() ?></strong><a href="<?php echo $this->getUrl('') ?>" title="<?php echo $this->getLogoAlt() ?>" class="logo"><img data-src-tmp="<?php echo $homepage_logo?>" data-src-tmp3="<?php echo $homepage_logo?>" src="<?php echo $homepage_logo ?>" alt="<?php echo $this->getLogoAlt() ?>" /></a></h1>
+                    	<?php else:?>
+                    	    <a href="<?php echo $this->getUrl('') ?>" title="<?php echo $this->getLogoAlt() ?>" class="logo"><img data-src-tmp="<?php echo $logo_tmp2?>" data-src-tmp3="<?php echo $logo_tmp3?>" src="<?php echo $logo_src ?>" alt="<?php echo $this->getLogoAlt() ?>" /></a>
+                    	<?php endif?>
+                    </div>
+                    
+                    <div class="visible-xs mobile-header">
+                    	<div class="mobile-navigation-bars">
+                        	<span class="fa fa-bars"></span>
+                            <span class="label"><?php echo $this->__('MENU')?></span>                            
+                        </div>
+						<?php $mobile_logo = $this->getSkinUrl('images/mobile-logo.png')?>
+                    	<?php if ($this->getIsHomePage()):?>
+                    	    <h1 class="mobile-logo"><strong class="no-display"><?php echo $this->getLogoAlt() ?></strong><a href="<?php echo $this->getUrl('') ?>" title="<?php echo $this->getLogoAlt() ?>" class="mobile-logo"><img data-src-tmp="<?php echo $mobile_logo?>" data-src-tmp3="<?php echo $mobile_logo?>" src="<?php echo $mobile_logo ?>" alt="<?php echo $this->getLogoAlt() ?>" /></a></h1>
+                    	<?php else:?>
+                    	    <div class="mobile-logo">
+							<strong class="no-display"><?php echo $this->getLogoAlt() ?></strong>
+                            	<a href="<?php echo $this->getUrl('') ?>" title="<?php echo $this->getLogoAlt() ?>" class="mobile-logo"><img data-src-tmp="<?php echo $mobile_logo?>" data-src-tmp3="<?php echo $mobile_logo?>" src="<?php echo $mobile_logo ?>" alt="<?php echo $this->getLogoAlt() ?>" /></a>
+								 
+                            </div>    
+                    	<?php endif?>
+                        
+                        <div class="mobile-cart-icon header-mini-cart">
+                        	<span class="lnr lnr-cart mobile-cart-link mini-cart-header">
+                            	<span class="total-badge"><?php echo ($total_item_cart = Mage::getSingleton('checkout/cart')->getItemsCount()) ? $total_item_cart : 0?></span>
+                            </span>
+                            <span class="cart-label"><?php echo $this->__('CART')?></span> 
+                            <div id="mobile_cart_summary" class="arw-toggle-content mobile-cart-summary">
+								<?php echo $this->getChildHtml('topCart') ?>
+                        	</div>
+                        </div>
+						
+                        <script type="text/javascript">
+                        jQuery('.mobile-cart-link').on('click', function(){
+							if(jQuery(this).hasClass('active')){
+								jQuery('#mobile_cart_summary').hide();
+								jQuery(this).removeClass('active');
+							}else{
+								jQuery('#mobile_cart_summary').show();
+								jQuery(this).addClass('active');
+							}	
+						});
+                        </script>
+                        
+                    </div>
+                </div>
+                <nav class="nav-primary-container clearfix">
+                    <div class="wrap-nav">
+                        <?php /*?><div class="arw-toggle-menu-mobile visible-xs">
+                            <div class="arw-btn-menu-mobile" data-style="<?php echo $mobile_menu_style?>">
+                                <label><?php echo $this->__('Menu')?></label>
+                                <span class="fa fa-bars"></span>
+                            </div>
+                        </div><?php */?>
+                        <?php echo $this->getChildHtml('topMenu') ?>
+                        <div class="header-quick-access">
+								
+                            <a class="btn-headertop"><span class="fa fa-bars"></span></a>
+							<div class="header-store">
+								<div class="dropdown show">
+								<?php if(Mage::app()->getStore()->getStoreId() == 1){ ?>
+								<a class="btn btn-secondary dropdown-toggle" href="https://www.bellfieldclothing.com/" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									<span>£</span>
+									<img width="30" alt="stage-one-left" src="<?php echo $this->getUrl(); ?>media/wysiwyg/uk-flag-new.jpg" />
+								</a>
+								<?php }elseif(Mage::app()->getStore()->getStoreId() == 2){ ?>
+								<a class="btn btn-secondary dropdown-toggle" href="https://www.bellfieldclothing.com/" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									<span>€</span>
+									<img width="30" alt="stage-one-left" src="<?php echo $this->getUrl(); ?>media/wysiwyg/eur-flag.jpg" />
+								</a>
+								<?php }elseif(Mage::app()->getStore()->getStoreId() == 3){?>
+								<a class="btn btn-secondary dropdown-toggle" href="https://www.bellfieldclothing.com/" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									<span>$</span>
+									<img width="30" alt="stage-one-left" src="<?php echo $this->getUrl(); ?>media/wysiwyg/usd-flag-new.jpg" />
+								</a>
+								<?php } ?>
+								<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+								<?php if(Mage::app()->getStore()->getStoreId() != 3){ ?>
+								  
+									<a class="dropdown-item" href="https://usd.bellfieldclothing.com/">
+										<img width="30" alt="stage-one-left" src="<?php echo $this->getUrl(); ?>media/wysiwyg/usd-flag-new.jpg" />
+										<span>$</span>
+									</a>
+									<br />
+								<?php } ?>
+								<?php if(Mage::app()->getStore()->getStoreId() != 1){ ?>
+									<a class="dropdown-item" href="https://www.bellfieldclothing.com/">
+										<img width="30" alt="stage-one-left" src="<?php echo $this->getUrl(); ?>media/wysiwyg/uk-flag-new.jpg" />
+										<span>£</span>
+									</a>
+									<br />
+								<?php } ?>
+									
+									<?php if(Mage::app()->getStore()->getStoreId() != 2){ ?>
+									<a class="dropdown-item" href="https://eur.bellfieldclothing.com/">
+										<img width="30" alt="stage-one-left" src="<?php echo $this->getUrl(); ?>media/wysiwyg/eur-flag.jpg" />
+										<span>€</span>
+									</a>
+									<?php } ?>
+									
+								  </div>
+								</div>
+							</div>
+                            <div class="top-link-benz">
+                                <ul class="header-top-link-ul-benz">
+                                    <li class="benz-myaccount">
+                                        <div class="arow-down down-account-benz"><span><?php echo $this->__('My Account')?></span></div>
+                                        <?php echo $topLinks;?>
+                                    </li>
+                                    <li class="header-language">
+                                        <?php //echo $this->getChildHtml('store_switcher') ?>
+										
+                                    </li>
+									<?php //echo $this->getLayout()->createBlock('cms/block')->setBlockId('store-switcher')->toHtml();?>
+                                    <?php /* if($store_currency):?>
+                                        <?php echo $store_currency;?>
+                                    <?php endif; */?>
+                                </ul>
+							</div>
+							
+                            <?php if($show_icon_search):?>
+                                <div class="arw-toggle-container header-mini-search">
+                                    <div class="arw-toggle-control btn-open-search">
+                                        <span class="fa fa-search"></span>
+                                    </div>
+                                    <div class="arw-toggle-content <?php echo $show_search_by_cat ? 'has_cat_search' : 'not_cat_search';?> hidden-lg hidden-md hidden-sm top-search-inner">
+                                        <?php echo $this->getChildHtml('topSearch') ?>
+                                    </div>
+                                </div>
+                            <?php endif;?>
+                            <?php if($mini_ajaxcart_icon):?>
+                                <div class="header-mini-cart arw-toggle-container">
+                                    <div class="mini-cart-header arw-toggle-control" id="mini_cart_header_icon">
+                                        <span class="text-shopcart">SHOPPING CART</span><span class="lnr lnr-cart" style="font-size: 20px"></span>
+                                        <span class="total-badge"><?php echo ($total_item_cart = Mage::getSingleton('checkout/cart')->getItemsCount()) ? $total_item_cart : 0?></span>
+                                    </div>
+                                    <div id="arw_mini_cart_header" class="arw-toggle-content">
+                                        <?php echo $this->getChildHtml('topCart') ?>
+                                    </div>
+                                </div>
+                            <?php endif?>
+                        </div>
+                        <?php if($mobile_menu_style == 'accordion'):?>
+                            <?php //echo $this->getChildHtml('topMenuMobile')?>
+                        <?php endif;?>
+                        <?php if ($block_footer_home_6 = $this->getLayout()->createBlock('cms/block')->setBlockId('block_footer_home_6')->toHtml()): ?>
+                            <div class="block-footer-home-6" style="display: none;">
+                                <?php echo $block_footer_home_6; ?>
+                            </div>
+                        <?php endif;?>
+                    </div>
+                </nav>
+                <div class="arw-toggle-content <?php echo $show_search_by_cat ? 'has_cat_search' : 'not_cat_search';?> topsearch-specail hidden-xs">
+                    <?php echo $this->getChildHtml('topSearch') ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<?php echo $this->getChildHtml('topContainer'); ?>
+
+
+<?php //if(Mage::getSingleton('cms/page')->getIdentifier() == 'home'  && Mage::app()->getFrontController()->getRequest()->getRouteName() == 'cms'){ ?>
+	<?php //if(Mage::helper('theme')->isMobile()){?>
+    	<div class="header-top-container mobile-banners-container">
+			<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('mobile-slider')->toHtml();?>
+	        <script type="text/javascript">
+	        jQuery(function(){
+				jQuery('.mobile-slider').slick({
+	  				infinite: true,
+			  		slidesToShow: 1,
+	  				slidesToScroll: 1,
+					autoplay: true,
+					autoplaySpeed: 5000,
+					draggable: true,
+					prevArrow: '<button type="button" class="slick-prev lnr lnr-chevron-left"></button>',
+					nextArrow: '<button type="button" class="slick-next lnr lnr-chevron-right"></button>',
+				});
+			});
+	        </script>
+		</div>
+	<?php //}?>
+<?php //}?>
+
+<script type="text/javascript">
+jQuery(function(){
+	jQuery('.mobile-navigation-bars').on('click', function(){
+		
+		if(jQuery('.mobile-navigation-bars').hasClass('active')){
+			remove_m_nav();			
+		}else{
+			jQuery('.mobile-menu-wrapper').addClass('m-nav-show');
+			jQuery('.wrapper').addClass('active');
+			jQuery('.mobile-navigation-bars').addClass('active');
+			jQuery('.mobile-navigation-bars .fa').removeClass('fa-bars').addClass('fa-close');
+			window.setTimeout(function(){
+				jQuery('.wrapper').append('<div class="site-mask" onclick="remove_m_nav()"></div>');
+			}, 500);
+			jQuery('body').addClass('m-nav-active');
+		}
+	});
+});
+function remove_m_nav(){
+	jQuery('.mobile-menu-wrapper').removeClass('m-nav-show');
+	jQuery('.wrapper').removeClass('active');
+	jQuery('.mobile-navigation-bars').removeClass('active');
+	jQuery('.site-mask').remove();
+	jQuery('.mobile-navigation-bars .fa').removeClass('fa-close').addClass('fa-bars');
+	jQuery('body').removeClass('m-nav-active');
+}
+
+
+</script>

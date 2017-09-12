@@ -1,0 +1,257 @@
+<?php
+
+$ids = $this->getProductIds();
+
+?>
+
+
+<div class="entry-edit">
+
+
+    <div class="entry-edit-head">
+        <h4 class="icon-head head-products"><?php echo $this->helper('bellfield')->__('Processing Products') ?></h4>
+    </div>
+<div class="box-left">
+<div class="actions">
+
+	<form id="edit_form"
+		action="<?php echo Mage::helper("adminhtml")->getUrl('*/*/upload');?>"
+		method="post" enctype="multipart/form-data">
+		<?php echo $this->getBlockHtml('formkey')?>
+
+		<div class="box-left">
+<?php if (file_exists(Mage::getBaseDir() . DS . "datasync/products" . DS."products.xlsx")) :?>
+			<p>current file datasync/products/products.xlsx - <?php echo date("r", filemtime(Mage::getBaseDir() . DS . "datasync/products" . DS."products.xlsx"))?></p> 
+
+<?php else:?>
+			<p>The spreadsheet must be uploaded as datasync/products/products.xlsx</p> 
+<?php endif;?>
+<input
+				type="file" name="sourcefile" /> <input id="uploadxls" type="submit"
+				class="uploadxls" value="Upload File" />
+		</div>
+
+	</form>
+	<div class="clear"></div>
+
+<hr/>
+<button id="bellfieldstartbut" class="startbellfield"><span>Update Products</span></button>
+
+</div>
+
+
+    <div id="itemlist">
+
+    </div>
+</div>
+<div class="box-right" style="display:none">
+    <div id="productcount">
+ 		<div class="products">Total Products Found</div> <div class="productcountval" id="totalproducts">0</div>
+ 		<div class="products">Total Products Updated</div> <div class="productcountval" id="updatedproducts">0</div>
+ 		<div class="products">Total Products Skipped</div> <div class="productcountval" id="skippedproducts">0</div>
+ 		<div class="products">Products Processed</div> <div class="productcountval" id="processedproducts">0</div>
+ 		<div class="products">Products Remaining</div> <div class="productcountval" id="leftproducts">0</div>
+
+        <div class="clear"></div>
+    </div>
+        <div id="errorproducts"></div>
+</div>
+
+</div>
+
+<div class="clear"></div>
+
+<script type="text/javascript">
+var ids=<?php echo json_encode($ids)?>;
+
+var i=0;
+var ifound=0;
+var iupdated=0;
+var imissing=0;
+var newproducts=true;
+var xsuiteprocessed=0;
+var xsuiteadded=0;
+var xsuiteexisting=0;
+
+
+$('totalproducts').update(""+ids.length);
+
+$('bellfieldstartbut').on('click', 'button', startupdate);
+
+
+$('totalproducts').update(""+ids.length);
+
+function startupdate() {
+
+	ifound=0;
+	imissing=0;
+	iupdated=0;
+	newproducts=true;
+	xsuiteprocessed=0;
+
+//	for (i=0; i<ids.length;i++) {
+	for (i=0; i<=ids.length-1;i++) {
+		updateproduct(ids[i]);
+	}
+
+
+
+	 while (newproducts)
+	  {
+		 newproducts=false; // incase something goes wrong
+		 getnewproducts();
+
+	  }
+
+
+
+
+
+
+
+}
+function produpdate() {
+
+
+	new Ajax.Request('/index.php/bellfieldadmin/adminhtml_products/updatebysku/', {
+	  parameters: {sku: $('prodid').value , limit: 12},
+      asynchronous: false,
+		  onSuccess: function(response) {
+		    // Handle the response content...
+			  ifound++;
+
+			  if(response.responseJSON==null) {
+				  $('itemlist').update(
+						  response.responseText
+				//	  after: "<hr>"
+					);
+
+			  }
+
+			  if (response.responseJSON.success) {
+			  	uvalue=response.responseJSON.productname+ "  OK";
+			  	iupdated++;
+			  	$('updatedproducts').update(""+iupdated);
+			  } else {
+				  	uvalue=response.responseJSON.productname+ "  Problem -"+ response.responseJSON.error;
+				  	imissing++;
+				  	$('skippedproducts').update(""+imissing);
+				  	$('errorproducts').insert(uvalue);
+
+
+			  }
+
+			  $('itemlist').update(
+					  uvalue
+			//	  after: "<hr>"
+				);
+
+			  $('processedproducts').update(""+i);
+			  $('leftproducts').update(""+(ids.length-i));
+
+
+
+		  }
+		});
+
+
+
+
+
+}
+
+function updateproduct(x) {
+	new Ajax.Request('/index.php/bellfield/adminhtml_products/update/', {
+		  parameters: {pid: x , limit: 12},
+          asynchronous: false,
+		  onSuccess: function(response) {
+		    // Handle the response content...
+			  ifound++;
+
+			  if(response.responseJSON==null) {
+				  $('itemlist').update(
+						  response.responseText
+				//	  after: "<hr>"
+					);
+
+			  }
+
+			  if (response.responseJSON.success) {
+			  	uvalue=response.responseJSON.productname+ "  OK";
+			  	iupdated++;
+			  	$('updatedproducts').update(""+iupdated);
+			  } else {
+				  	uvalue=response.responseJSON.productname+ "  Problem -"+ response.responseJSON.error;
+				  	imissing++;
+				  	$('skippedproducts').update(""+imissing);
+				  	$('errorproducts').insert(uvalue);
+
+
+			  }
+
+			  $('itemlist').update(
+					  uvalue
+			//	  after: "<hr>"
+				);
+
+			  $('processedproducts').update(""+i);
+			  $('leftproducts').update(""+(ids.length-i));
+
+
+
+		  }
+		});
+
+}
+
+
+function getnewproducts() {
+
+	new Ajax.Request('/index.php/bellfield/adminhtml_products/getnew/', {
+		  parameters: {'start': xsuiteprocessed,'limit':50},
+		  asynchronous: false,
+		  onSuccess: function(response) {
+		    // Handle the response content...
+
+			  if(response.responseJSON==null) {
+				  $('itemlist').update(
+						  response.responseText
+				//	  after: "<hr>"
+					);
+
+			  }
+
+			  if (response.responseJSON.success) {
+				  	$('xsuiteproductcount').update(""+response.responseJSON.count);
+				  	xsuiteadded+=response.responseJSON.added;
+				  	xsuiteexisting+=response.responseJSON.existing;
+				  	$('xsuiteadded').update(""+xsuiteadded);
+				  	$('xsuiteexisting').update(""+xsuiteexisting);
+  					  $('itemlist').insert(
+	  							response.responseJSON.message
+  					//	  after: "<hr>"
+					  						);
+				  	xsuiteprocessed=response.responseJSON.processed;
+				  	if (response.responseJSON.processed<response.responseJSON.count)newproducts=true;
+
+			  } else {
+
+
+			  }
+
+
+
+		  }
+		}
+
+
+
+	);
+
+
+
+
+
+}
+
+</script>

@@ -1,0 +1,100 @@
+<form class="form" id="franchiseForm">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12">
+				<h2>Open a Franchise</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-xs-12">
+                <div class="form-field">
+                    <label for="name"><?php echo $this->__("Full Name") ?>:</label>
+                    <input type="text" name="name" class="form-control required-entry" />
+                </div>
+                <div class="form-field">
+                    <label for="email"><?php echo $this->__("Email") ?>:</label>
+                    <input type="text" name="email" class="form-control required-entry validate-email" />
+                </div>
+                <div class="form-field">
+                    <label for="company_name"><?php echo $this->__("Company Name") ?>:</label>
+                    <input type="text" name="company_name" class="form-control" />
+                </div>
+                <div class="form-field">
+                    <label for="revenue"><?php echo $this->__("Aprox Revenue") ?>:</label>
+                    <input type="text" name="revenue" class="form-control" />
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-xs-12">
+                <div class="form-field">
+                    <label for="phone"><?php echo $this->__("Phone") ?>:</label>
+                    <input type="tel" name="phone" class="form-control required-entry validate-number" />
+                </div>
+                <div class="form-field">
+                    <label for="address"><?php echo $this->__("Address Line 1") ?>:</label>
+                    <input type="text" name="address" class="form-control required-entry validate-alphanum" />
+                </div>
+                <div class="form-field">
+                    <label for="city"><?php echo $this->__("City") ?>:</label>
+                    <input type="text" name="city" class="form-control required-entry validate-alphanum" />
+                </div>
+                <div class="form-field">
+                    <label for="postcode"><?php echo $this->__("Postcode/Zip") ?>:</label>
+                    <input type="text" name="postcode" class="form-control required-entry validate-zip" />
+                </div>
+            </div>
+        </div>
+		<div class="large-12 columns clearfix">
+			<button type="submit" class="btn btn--dark right text-center btn--fullWidth form-submit button">Submit</button>
+		</div>
+    </div>    
+</form>
+
+<script>
+	var franchise_form = new VarienForm('franchiseForm', true);
+	jQuery(document).ready(function() {
+		//Tiga.Validate.init(document.getElementById("franchiseForm"));
+		jQuery("#franchiseForm .form-submit").on("click", function(){
+			if(franchise_form.validator.validate()){
+				var formdata = jQuery("#franchiseForm").serializeObject();
+				var emaildata = {
+					"key" : "ghGxy2d9dHL6Kd-dW2upaA",
+					"message" : {
+						"html" : "Hey,<br>You have a new franchise application. Here are the deets<br><br>Name: "+ formdata.name +"<br>Address: "+ formdata.address +"<br>City: "+ formdata.city +"<br>Post Code: "+ formdata.postcode +"<br>Email: "+ formdata.email +"<br>Phone: "+ formdata.phone +"<br>Company Name: "+ formdata['company_name'] +"<br>Revenue: "+ formdata.revenue +"<br><br>Best Regards,<br>A robot.",
+						"subject" : "New Franchise Application",
+						"from_email" : formdata.email,
+						"from_name" : formdata.name,
+						"to" : [{
+							"email" : "info@bellfieldclothing.com",
+							"name" : "Bellfield"
+						}]
+					}
+				};
+				jQuery.ajax({
+					type: "POST",
+					url: "https://mandrillapp.com/api/1.0/messages/send.json",
+					data : emaildata,
+					success : function(){
+						jQuery("#franchiseForm").html("<p class='text-center'>Thanks! We'll be in touch.</p>");
+					}
+				});
+				return false;
+			}
+		});
+		jQuery.fn.serializeObject = function() {
+		    var o = {};
+		    var a = this.serializeArray();
+		    jQuery.each(a, function() {
+		        if (o[this.name] !== undefined) {
+		            if (!o[this.name].push) {
+		                o[this.name] = [o[this.name]];
+		            }
+		            o[this.name].push(this.value || '');
+		        } else {
+		            o[this.name] = this.value || '';
+		        }
+		    });
+		    return o;
+		};
+	});
+</script>

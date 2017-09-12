@@ -1,0 +1,107 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+        <Webduo_Theme>
+            <version>0.1.0</version>
+        </Webduo_Theme>
+    </modules>
+	<frontend>
+        <routers>
+            <theme>
+                <use>standard</use>
+                <args>
+                    <module>Webduo_Theme</module>
+                    <frontName>theme</frontName>
+                </args>
+            </theme>
+        </routers> 
+		<!--<layout>
+            <updates>
+                <webduo_theme>
+                    <file>theme.xml</file>
+                </webduo_theme>
+            </updates>
+        </layout>-->
+    </frontend>
+	<admin>
+        <routers>
+            <theme>
+                <use>admin</use>
+                <args>
+                    <module>Webduo_Theme</module>
+                    <frontName>theme</frontName>
+                </args>
+            </theme>
+        </routers>
+	</admin>
+	<global>
+		
+		<blocks>
+			<theme>
+ 				 <class>Webduo_Theme_Block</class> 
+  			</theme>
+  		</blocks>
+		
+		<models>
+			<theme>
+ 				 <class>Webduo_Theme_Model</class>
+			</theme>
+  		</models>
+		
+		<helpers>
+            <theme>
+                <class>Webduo_Theme_Helper</class>
+            </theme>
+        </helpers>
+		<resources>
+            <theme_setup>
+                <setup>
+                    <module>Webduo_Theme</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </theme_setup>
+            <theme_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </theme_write>
+            <theme_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </theme_read>
+        </resources>		
+		
+	</global>
+	
+	<adminhtml>
+		<!--<layout>
+            <updates>
+                <theme>
+                    <file>theme.xml</file>
+                </theme>
+            </updates>
+        </layout>-->
+		<acl>
+			<resources>
+				<admin>
+					<children>
+						<system>
+							<children>
+								<config>
+									<children>
+										<theme translate="title" module="theme">
+											<title>Theme Config</title>
+										</theme>
+									</children>
+								</config>
+							</children>
+						</system>
+					</children>
+				</admin>
+			</resources>
+		</acl>
+	</adminhtml>
+</config>

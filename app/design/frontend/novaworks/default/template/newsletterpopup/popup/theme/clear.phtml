@@ -1,0 +1,54 @@
+<?php
+$additionalFields = $this->getAdditionalFields();
+$helper = Mage::helper('newsletterpopup');
+?>
+<div id="esns_box_layer" class="esns_theme_clear">
+    <div id="esns_box_close"></div>
+    <div class="esns_box_icon" style="background-color: <?php echo $this->getColor1();?>"></div>
+    <?php if ($this->getFirstTitle()): ?>
+        <div id="esns_box_block_1">
+            <?php echo $this->getFirstTitle() ?>
+        </div>
+    <?php endif; ?>
+    <?php if ($this->getSecondTitle()): ?>
+        <div id="esns_box_block_2">
+            <?php echo $this->getSecondTitle() ?>
+        </div>
+    <?php endif; ?>
+    <div id="esns_box_subscribe" <?php if ($additionalFields): ?>class="esns-with-additional"<?php endif;?>>
+        <div id="esns_box_subscribe_form">
+            <?php if ($additionalFields): ?>
+                <?php foreach ($additionalFields as $field): ?>
+                    <?php if($field['position'] >= 0):?>
+                        <?php echo $field['html'];?>
+                    <?php endif?>
+                <?php endforeach;?>
+            <?php endif;?>
+            <input onclick="if(this.value=='<?php echo $helper->translate('email'); ?>') this.value=''" onblur="if(this.value=='') this.value='<?php echo $helper->translate('email'); ?>'" id="esns_email" name="subscribe_email" value="<?php echo $helper->translate('email'); ?>" type="text">
+            <?php if ($additionalFields): ?>
+                <?php foreach ($additionalFields as $field): ?>
+                    <?php if($field['position'] < 0):?>
+                        <?php echo $field['html'];?>
+                    <?php endif?>
+                <?php endforeach;?>
+            <?php endif;?>
+            <a href="javascript:void(0)" id="esns_submit" ><?php echo $helper->translate('subscribe'); ?></a>
+        </div>
+        <div id="esns_box_subscribe_response_error"></div>
+        <div id="esns_box_subscribe_response_success" style="color: <?php echo $this->getColor1(); ?>"></div>
+        <div id="esns_box_subscribe_response_coupon">
+            <div id="esns_box_coupon_code"><?php echo $helper->translate('coupon'); ?>: <span></span></div>
+            <div class="esns-box-shop-now-button"><a class="esns-close" href="javascript:void(0)" style="background-color: <?php echo $this->getColor1(); ?>"><?php echo $helper->translate('shop_now'); ?></a> </div>
+        </div>
+    </div>
+    <?php if ($socials = $this->getSocial()):?>
+        <div class="esns-footer" style="background-color: <?php echo $this->getColor1(); ?>">
+            <div class="esns-block-title"><?php echo $this->getFooterTitle() ?></div>
+            <ul class="esns-social">
+                <?php foreach ($socials as $social): ?>
+                    <li><a target="_blank" class="esns-<?php echo $social['name'];?>" href="<?php echo $social['link'];?>" title="<?php echo $social['title'];?>"></a></li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+    <?php endif;?>
+</div>

@@ -1,0 +1,35 @@
+<div class="form-list" id="payment_form_<?php echo $this->getMethodCode() ?>" style="display:none;">
+  <div><?php echo $this->__('Buy online and pay later when it suits you.') ?></div>
+  <div>
+    <?php echo $this->getMethod()->getConfigData('message'); ?>
+  </div>
+
+  <script type="text/javascript">
+    (function () {
+      
+      Payment.prototype.save = function () {
+        var self = this;
+        if (checkout.loadWaiting != false)
+          return;
+        var validator = new Validation(this.form);
+        if (this.validate() && validator.validate()) {
+          checkout.setLoadWaiting('payment');
+            console.log(this);
+          var request = new Ajax.Request(
+            this.saveUrl,
+            {
+              method: 'post',
+              onComplete: this.onComplete,
+              onSuccess: function(event) {
+                event.responseText=event.responseText.replace(/Place Order/g, 'Continue');
+                self.onSave(event);
+              },
+              onFailure: checkout.ajaxFailure.bind(checkout),
+              parameters: Form.serialize(this.form)
+            }
+          );
+        }
+      };
+
+    })();
+  </script>

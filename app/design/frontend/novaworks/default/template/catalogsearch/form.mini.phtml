@@ -1,0 +1,57 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2014 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+/* @var $this Mage_Core_Block_Template */
+/* @var $catalogSearchHelper Mage_Catalogsearch_Helper_Data */
+$catalogSearchHelper =  $this->helper('catalogsearch');
+$rand_id = rand();
+?>
+<form id="search_mini_form_<?php echo $rand_id;?>" class="search_mini_form" action="<?php echo str_replace("http:", "https:", $catalogSearchHelper->getResultUrl()) ?>" method="get">
+    <div class="form-search">
+        <?php if(Mage::getStoreConfig('sebian/header/show_search_by_category')){
+            $currentCategorySearch = (isset($_GET['cat']) && $_GET['cat'] != '') ? (int) $_GET['cat'] : false;
+            if($max_depth = Mage::getStoreConfig('sebian/header/category_depth')){
+                $max_depth = (int) $max_depth;
+            }else{
+                $max_depth = false;
+            }
+            ?>
+            <select class="search-select-cat" name="cat">
+                <option value="0"><?php echo $this->__('All Category')?></option>
+                <?php echo Mage::helper('sebian')->renderOptionDropdownCategory(Mage::helper('catalog/category')->getStoreCategories(),$max_depth,0,"","&nbsp;&nbsp;&nbsp;",$currentCategorySearch);?>
+            </select>
+        <?php }?>
+        <input id="search_<?php echo $rand_id;?>" type="text" name="<?php echo $catalogSearchHelper->getQueryParamName() ?>" value="<?php echo $catalogSearchHelper->getEscapedQueryText() ?>" class="input-text" maxlength="<?php echo $catalogSearchHelper->getMaxQueryLength();?>" placeholder="Enter key words..." />
+        <span class="btn-close-search fa fa-times" style="color: #fff"></span>
+        <button type="submit" title="<?php echo $this->__('Search') ?>" class="button button_search_2"><span><span class="text-search"><i class="fa fa-search"></i></span></span></button>
+        <div id="search_autocomplete_<?php echo $rand_id;?>" class="search-autocomplete"></div>
+        <script type="text/javascript">
+            //<![CDATA[
+            var searchForm_<?php echo $rand_id;?> = new Varien.searchForm('search_mini_form_<?php echo $rand_id;?>', 'search_<?php echo $rand_id;?>', '<?php echo $this->__('Enter key words...') ?>');
+            searchForm_<?php echo $rand_id;?>.initAutocomplete('<?php echo $catalogSearchHelper->getSuggestUrl() ?>', 'search_autocomplete_<?php echo $rand_id;?>');
+            //]]>
+        </script>
+    </div>
+</form>

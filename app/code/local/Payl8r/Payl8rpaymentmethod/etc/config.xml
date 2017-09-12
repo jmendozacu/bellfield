@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<config>
+  <modules>
+    <Payl8r_Payl8rpaymentmethod>
+      <version>1.0.0.1</version>
+    </Payl8r_Payl8rpaymentmethod>
+  </modules>
+ 
+  <global>
+<!--    <fieldsets>
+      <sales_convert_quote_payment>
+        <custom_field_one>
+          <to_order_payment>*</to_order_payment>
+        </custom_field_one>
+        <custom_field_two>
+          <to_order_payment>*</to_order_payment>
+        </custom_field_two>
+      </sales_convert_quote_payment>
+    </fieldsets>-->
+     
+    <helpers>
+      <payl8rpaymentmethod>
+        <class>Payl8r_Payl8rpaymentmethod_Helper</class>
+      </payl8rpaymentmethod>
+    </helpers>
+ 
+    <blocks>
+      <payl8rpaymentmethod>
+        <class>Payl8r_Payl8rpaymentmethod_Block</class>
+      </payl8rpaymentmethod>
+    </blocks>
+         
+    <models>
+      <payl8rpaymentmethod>
+        <class>Payl8r_Payl8rpaymentmethod_Model</class>
+      </payl8rpaymentmethod>
+    </models>
+ 
+    <resources>
+      <payl8rpaymentmethod_setup>
+        <setup>
+          <module>Payl8r_Payl8rpaymentmethod</module>
+        </setup>
+      </payl8rpaymentmethod_setup>
+    </resources>
+  </global>
+ 
+  <default>
+    <payment>
+      <payl8rpaymentmethod>
+        <active>1</active>
+        <model>payl8rpaymentmethod/paymentmethod</model>
+        <order_status>pending</order_status>
+        <title>Payl8r Gateway</title>
+        <allowspecific>1</allowspecific>
+        <payment_action>sale</payment_action>
+        <test>1</test>
+        <trans_key backend_model="adminhtml/system_config_backend_encrypted"/>
+        <username backend_model="adminhtml/system_config_backend_encrypted"/>
+      </payl8rpaymentmethod>
+    </payment>
+  </default>
+   
+  <frontend>
+    <routers>
+      <payl8rpaymentmethod>
+        <use>standard</use>
+        <args>
+          <module>Payl8r_Payl8rpaymentmethod</module>
+          <frontName>payl8rpaymentmethod</frontName>
+        </args>
+      </payl8rpaymentmethod>
+    </routers>
+  </frontend>
+</config>

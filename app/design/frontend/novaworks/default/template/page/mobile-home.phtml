@@ -1,0 +1,23 @@
+<?php /* <div class="mobile-home-page">
+	<img src="<?php echo $this->getSkinUrl('images/mobile-home.jpg') ?>" alt="<?php echo $this->__('mpbile') ?>" />
+	<ul>
+	<li>
+	<span class="shopmen">
+	<a href="<?php echo $this->getUrl('men-categories');?>" class="landing-page">SHOPMEN</a>
+	</span>  
+	</li>
+	<li>
+	<span class="shopwomen">
+	<a href="<?php echo $this->getUrl('women-categories');?>" class="landing-page">SHOPWOMEN	</a>
+	</span>
+	</li>
+	</ul>
+</div>	 */ ?>
+<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('mobile-home')->toHtml();?>
+
+<?php //echo $this->getLayout()->createBlock('cms/block')->setBlockId('mobile_woman_home')->toHtml(); ?> 
+
+<?php //echo $this->getLayout()->createBlock('cms/block')->setBlockId('mobile_man_home')->toHtml(); ?> 
+
+
+

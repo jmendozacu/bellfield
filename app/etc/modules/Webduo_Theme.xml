@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Webduo_Theme>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Webduo_Theme>
+    </modules>
+</config> 
