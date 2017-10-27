@@ -47,10 +47,14 @@
 		<div class="clearer" style="clear:both;"></div>
 		<?php if (1) { ?>
 			<?php if ($_product->getFinalPrice() > 50) { ?>
-				<div onclick="showhide()" style="cursor: pointer;padding: 5px 16px;border:1px solid #0CBCC6;border-radius: 4px;float: left;text-align: center;margin-top: 20px;">
-					<img src="<?php echo $this->getSkinUrl('images/payl8r-logo.jpg');?>" alt="Payl8r logo" style="width:120px;margin-top: -3px;margin-bottom: -8px;"/>
-					<p class="payl8r-small-title">View Finance Options</p>
-				</div> 
+				 
+				<!--- Payl8r code  Start--->
+					<!--- <div onclick="showhide()" style="cursor: pointer;padding: 5px 16px;border:1px solid #0CBCC6;border-radius: 4px;float: left;text-align: center;margin-top: 20px;">
+						<img src="<?php /* echo $this->getSkinUrl('images/payl8r-logo.jpg'); */?>" alt="Payl8r logo" style="width:120px;margin-top: -3px;margin-bottom: -8px;"/>
+						<p class="payl8r-small-title">View Finance Options</p>
+					</div> --->
+				<!--- Payl8r code End --->
+				
 				<link rel="stylesheet" href="<?php echo $this->getSkinUrl('css/pl-calculator_3.css'); ?>">
 				<link href="https://fonts.googleapis.com/css?family=Lato:400,300,700" rel="stylesheet" type="text/css">	
 				<div class="clearer"></div>
@@ -68,7 +72,7 @@
 				});
 				</script>
 				
-			<?php } ?>
+			<?php } ?> 
 		<?php } ?>
 <?php else:?>
     <div class="add-to-box-actions"><!-- ./ start add-to-box-actions-->

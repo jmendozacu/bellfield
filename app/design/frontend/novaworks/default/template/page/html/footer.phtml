@@ -24,6 +24,15 @@
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
+
+<div class="container desktop-view">         
+	<div class="landing-social-icon">
+		<div class="footer_link_fa">
+			<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('footer_social_links')->toHtml();?> 
+		</div>
+	</div>
+</div>
+ 
 <footer class="footer-container">
     <?php echo $this->getChildHtml('arw_global_footer_row') ?>
     <div class="footer-copyright">

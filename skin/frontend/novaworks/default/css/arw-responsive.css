@@ -13697,8 +13697,9 @@
   .header-container.header_style_2 #header {padding: 0;}
   .header-container.header_style_2 .header-logo {width: 100%; padding-top: 0; }
   .header-container.header_style_2 .header-logo .logo img {margin: 0 auto;}
-  .header-container.header_style_2 .nav-primary-container {width: 100%;position: relative; padding-bottom: 10px;    display: none;}
-.slider-tab-toggle {display: block;}
+  .header-container.header_style_2 .nav-primary-container {width: 100%; padding-bottom: 10px;    display: none;}
+.slider-tab-toggle {display: block;} 
+.slider-tab-toggle {display: block;} 
   .slider-tab {display: none;}
  .tab_style_3 .arw_tab_slider .slider-tab {margin: 15px 0;}
   .arw-control-style-1 .owl-nav .owl-prev,
